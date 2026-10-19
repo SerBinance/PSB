@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PSB 241 CBT Practice</title>
+<style>
+:root{--bg:#eef2f1;--card:#fff;--ink:#14201f;--mut:#5b6b69;--line:#d5dfdd;--acc:#0f5c5a;--accink:#fff;--ok:#17703f;--okbg:#e2f3e9;--bad:#a8302a;--badbg:#fbe8e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1514;--card:#16201f;--ink:#e6efed;--mut:#93a6a3;--line:#2a3a38;--acc:#5cc2bb;--accink:#06201f;--ok:#6fd49a;--okbg:#14301f;--bad:#f09088;--badbg:#341a18}}
+:root[data-theme="dark"]{--bg:#0e1514;--card:#16201f;--ink:#e6efed;--mut:#93a6a3;--line:#2a3a38;--acc:#5cc2bb;--accink:#06201f;--ok:#6fd49a;--okbg:#14301f;--bad:#f09088;--badbg:#341a18}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{max-width:640px;margin:0 auto;padding:16px 16px 40px}
+h1{font:700 30px/1.15 Georgia,"Times New Roman",serif;margin:28px 0 10px}
+h2{font:600 21px/1.35 Georgia,"Times New Roman",serif;margin:12px 0 16px}
+p{color:var(--mut);margin:0 0 12px}
+.top{display:flex;justify-content:space-between;font-size:14px;color:var(--mut);margin-bottom:8px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.chip{display:inline-block;margin-top:16px;font-size:13px;color:var(--acc);border:1px solid var(--line);border-radius:12px;padding:2px 10px}
+.opt{display:flex;gap:12px;width:100%;text-align:left;align-items:flex-start;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:10px;font:inherit;cursor:pointer}
+.opt b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-size:13px}
+.opt:hover:not(:disabled){border-color:var(--acc)}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.no{border-color:var(--bad);background:var(--badbg)}
+.opt:disabled{cursor:default}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.tm{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}.tm.low{color:var(--bad)}
+.fb{border-radius:12px;padding:12px 14px;margin:6px 0 14px;border-left:5px solid}
+.fb.ok{background:var(--okbg);border-color:var(--ok)}.fb.no{background:var(--badbg);border-color:var(--bad)}
+.fb strong{display:block;margin-bottom:2px}
+.pri,.sec{font:600 16px system-ui,sans-serif;border-radius:12px;padding:14px 18px;width:100%;cursor:pointer;margin-bottom:10px}
+.pri{background:var(--acc);color:var(--accink);border:0}.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.big{font:700 54px/1 Georgia,serif;margin:20px 0 4px}
+.row{display:flex;align-items:center;gap:10px;font-size:14px;margin:8px 0}.row span:first-child{flex:0 0 42%}
+.row .bar{flex:1}.row em{flex:none;font-style:normal;color:var(--mut);width:46px;text-align:right}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:8px}summary{cursor:pointer;font-weight:600}
+</style></head><body><div id="app"></div>
+<script>
+const T=["Basics","Chytrids","Rusts & smuts","Mushrooms & Gasteromycetes","Deuteromycotina","Slime moulds","Ascomycetes","Practical specimens","Culturing & preservation"];
+// [topic, question, correct, wrong1, wrong2, wrong3, one-line explanation]
+const Q=[
+[0,"A fungus is eucarpic when…","only part of its thallus becomes reproductive","its whole thallus becomes reproductive","it has no vegetative phase","it lives only inside host cells","Eucarpic means the thallus splits into vegetative and reproductive parts, whereas holocarpic converts the entire thallus into propagules."],
+[0,"A mycelium whose nuclei are genetically different is…","heterokaryotic","homokaryotic","monokaryotic","coenocytic","Heterokaryotic means genotypically different nuclei share one mycelium; homokaryotic means identical nuclei."],
+[0,"A mycelium with two genetically distinct haploid nuclei per cell is…","dikaryotic","monokaryotic","homokaryotic","diploid","Dikaryotic (n+n) cells hold two compatible haploid nuclei side by side."],
+[0,"Thick-walled resting bodies that store food reserves are called…","sclerotia","sporangia","rhizoids","pycnidia","Sclerotia are tough hyphal masses that help the fungus survive harsh conditions."],
+[0,"Which group typically has non-septate (coenocytic) hyphae?","Zygomycetes","Ascomycetes","Basidiomycetes","Deuteromycetes","Zygomycetes are coenocytic, while the other three groups have septate hyphae."],
+[0,"The sexual stage of a fungus is the ____ and the asexual stage the ____.","teleomorph; anamorph","anamorph; teleomorph","holomorph; anamorph","teleomorph; holomorph","Teleomorph is sexual, anamorph is asexual, and holomorph is the whole fungus."],
+[0,"Rhizopus, the black bread mould, belongs to…","Zygomycetes","Ascomycetes","Chytridiomycetes","Deuteromycetes","Rhizopus shows non-septate hyphae, sporangiospores and zygospores, the Zygomycete hallmarks."],
+[0,"Dikaryotization is brought about by…","nuclear migration from a dikaryon into a monokaryon","fusion of two nuclei in the ascus","budding of yeast cells","meiosis in the basidium","Nuclei of the dikaryon migrate into a monokaryotic mycelium and convert it to the dikaryotic state."],
+[1,"Chytridiomycetes are the only fungi with motile zoospores, bearing a single…","posterior whiplash flagellum","anterior tinsel flagellum","lateral tinsel flagellum","pair of whiplash flagella","The single posterior whiplash flagellum identifies chytrid zoospores."],
+[1,"Black wart disease of potato is caused by…","Synchytrium endobioticum","Phytophthora infestans","Plasmodiophora brassicae","Spongospora subterranea","Synchytrium endobioticum causes warty outgrowths through hypertrophy and hyperplasia of tuber cells."],
+[1,"In Synchytrium, what decides whether zoospores or gametes form?","availability of water","soil pH","day length","host age","Water at the critical stage gives asexual zoospores, while scarcity gives gametes."],
+[1,"Synchytrium sporangia are grouped into a…","sorus","pycnidium","acervulus","synnema","A sorus is the cluster of sporangia produced in Synchytrium."],
+[1,"A chytrid living inside host cells is described as…","endobiotic","epibiotic","ectomycorrhizal","holomorphic","Endobiotic means inside the host, while epibiotic means on its surface."],
+[1,"The zygote of Chytridiomycetes becomes a…","diploid resting spore","haploid ascospore","dikaryotic basidium","conidium","The zygote converts into a thick-walled diploid resting spore that later forms a sporangium."],
+[1,"Which is NOT an order of Chytridiomycetes?","Uredinales","Chytridiales","Blastocladiales","Monoblepharidales","Uredinales are rust fungi (Basidiomycotina), not chytrids."],
+[2,"Rusts, smuts and jelly fungi are grouped in class…","Hemibasidiomycetes","Hymenomycetes","Gasteromycetes","Deuteromycetes","These groups have septate or deeply divided basidia, characteristic of Hemibasidiomycetes."],
+[2,"BUSTA stands for…","Basidia, Uredinia, Spermogonia, Telia, Aecia","Basidia, Uredospores, Sori, Teliospores, Aeciospores","Basidiospores, Uredinia, Sporangia, Telia, Aecia","Binucleate, Uredinia, Spermatia, Teliospores, Aecia","BUSTA lists the five rust stages in the order IV, II, 0, III, I."],
+[2,"The stage numbers for B-U-S-T-A are…","IV, II, 0, III, I","I, II, III, IV, 0","0, I, II, III, IV","IV, III, II, I, 0","Basidia = IV, Uredinia = II, Spermogonia = 0, Telia = III, Aecia = I."],
+[2,"Stage 0 (spermogonia) bears…","spermatia and receptive hyphae","aeciospores","urediniospores","teliospores","Spermogonia produce spermatia and receptive hyphae, which form the sexual stage."],
+[2,"Aecia (stage I) bear…","aeciospores","basidiospores","teliospores","spermatia","Aeciospores from aecia on barberry go on to infect the cereal host."],
+[2,"Thick-walled resting teliospores are borne in…","telia (stage III)","uredinia (stage II)","aecia (stage I)","spermogonia (stage 0)","Telia produce teliospores, which undergo karyogamy and then germinate to form basidia."],
+[2,"Urediniospores are the “repeating stage” because they…","reinfect the same host that produced them","form only on barberry","are produced after meiosis","are sexual spores","Stage II spreads the rust from wheat to wheat repeatedly during the season."],
+[2,"A rust needing two unrelated host plants is…","heteroecious","autoecious","microcyclic","holocarpic","Heteroecism means two unrelated hosts, as in Puccinia graminis."],
+[2,"In Puccinia graminis, stages 0 and I occur on ____ and II and III on ____.","barberry; wheat","wheat; barberry","wheat; wheat","barberry; barberry","Spermogonia and aecia form on barberry, while uredinia and telia form on wheat."],
+[2,"A rust cycle with four spore stages and no uredinia is…","demicyclic","macrocyclic","microcyclic","autoecious","Macrocyclic has 5 stages, demicyclic 4 (no uredinia), and microcyclic 3 (no aecia or uredinia)."],
+[2,"The three families of Uredinales are Pucciniaceae, Melampsoraceae and…","Coleosporaceae","Ustilaginaceae","Geastraceae","Lycoperdaceae","Coleosporaceae completes the trio of rust families."],
+[2,"Which statement about rust fungi is FALSE?","They produce basidiocarps","They are obligate parasites","They form haustoria","They have a binucleate phase","Rusts do not form basidiocarps; their basidia arise from germinating teliospores."],
+[2,"Smut fungi belong to order…","Ustilaginales","Uredinales","Tremellales","Phallales","Ustilaginales are smuts, Uredinales are rusts, and Tremellales are jelly fungi."],
+[2,"Black, soot-like dusty spore masses are produced by…","smut fungi","puffballs","stink horns","slime moulds","Smut teliospores form powdery black masses resembling soot."],
+[2,"Clamp connections are a diagnostic feature of ____ mycelium.","dikaryotic","monokaryotic","coenocytic","plasmodial","Clamp connections maintain the dikaryotic condition during cell division."],
+[3,"The ring left on the stalk after the inner veil tears in Agaricus is the…","annulus","volva","pileus","gleba","The annulus is the remnant of the inner veil on the stipe."],
+[3,"The sterile cells of the hymenium are…","paraphyses and cystidia","basidia and basidiospores","trama and subhymenium","asci and ascospores","Basidia are the fertile cells, while paraphyses and cystidia are sterile."],
+[3,"In Gasteromycetes the outer wall is the ____ and the spore-bearing tissue the ____.","peridium; gleba","gleba; peridium","pileus; stipe","volva; hymenium","The peridium encloses the gleba, and spores are released passively."],
+[3,"Puffballs belong to order…","Lycoperdales","Phallales","Nidulariales","Sclerodermatales","Lycoperdales include Lycoperdon, Calvatia and Bovista."],
+[3,"The giant puffball, source of the anti-tumour agent calvacin, is…","Calvatia gigantea","Lycoperdon perlatum","Geastrum triplex","Scleroderma citrinum","An aqueous extract of Calvatia gigantea contains calvacin."],
+[3,"Earth stars belong to family…","Geastraceae","Lycoperdaceae","Phallaceae","Nidulariaceae","Geastraceae contains the genus Geastrum."],
+[3,"In earth stars the inner spore sac opens by…","a single apical pore","a lid-like operculum","a ring of rays","violent explosion","The outer peridium splits into star-like rays while the inner sac opens by one pore."],
+[3,"Earth balls (Sclerodermatales) have…","a dark gleba with no columella or capillitium","a white powdery gleba with capillitium","a jelly-like gleba","lens-shaped peridioles","Scleroderma has a dark gleba lacking capillitium and a single thick, hard peridium."],
+[3,"Stink horns (Phallales) get their name from…","a foul smell and a horn-like receptacle","their toxicity and habitat","their size and colour","their spore colour only","The smelly gleba and the horn-like receptacle explain the name."],
+[3,"What remains at the base of a stink horn stipe?","volva","annulus","hapteron","funiculus","The volva is the remnant of the egg’s peridium."],
+[3,"Stink horn eggs anchor below the substratum by…","rhizomorphs","rhizomes","funiculi","haptera","Rhizomorphs are rope-like strands of hyphae; rhizomes belong to plants."],
+[3,"Flies disperse stink horn spores because the gleba is…","foul-smelling and sticky","dry and powdery","brightly coloured","ballistic","The smell attracts flies, and the sticky spores cling to them."],
+[3,"Bird’s nest fungi belong to order…","Nidulariales","Phallales","Lycoperdales","Geastrales","Nidulariales resemble tiny nests holding egg-like peridioles."],
+[3,"Which pair is correct?","Cyathus: deep cup, grey/black peridioles; Crucibulum: shallow cup, white peridioles","Cyathus: shallow cup, white peridioles; Crucibulum: deep cup, black peridioles","Both have black peridioles","Neither has a funiculus","Cyathus is deeper with dark peridioles, while Crucibulum is shallow with pale ones."],
+[3,"Peridioles of Cyathus and Crucibulum are attached to the cup by a…","funiculus","volva","columella","annulus","The funiculus tethers the peridiole, and its sticky hapteron anchors it after splashing."],
+[3,"Splash cups disperse peridioles through the action of…","raindrops","wind","insects","explosive discharge","Raindrops splash the peridioles out from a distance of about 1 m."],
+[4,"Fungi imperfecti (Deuteromycotina) are so called because…","no sexual stage is known","they lack hyphae","they produce no spores","they are all yeasts","Only the asexual (conidial) stage is known, so they are classified as form-taxa."],
+[4,"A flask-shaped structure with an ostiole that produces conidia is a…","pycnidium","acervulus","synnema","sporodochium","Pycnidia are typical of the form-order Sphaeropsidales."],
+[4,"A flat, open bed of hyphae bearing conidiophores is an…","acervulus","pycnidium","synnema","perithecium","Acervuli are typical of the form-order Melanconiales."],
+[4,"Conidiophores arising side by side and bound together form a…","synnema","sporodochium","pycnidium","stroma","A synnema is a bundle of conidiophores, with conidia at the tip and sometimes the sides."],
+[4,"A cushion-shaped mass of hyphae carrying conidiophores is a…","sporodochium","synnema","acervulus","pycnidium","Sporodochia are typical of Tuberculariaceae such as Fusarium."],
+[4,"The largest form-order of Deuteromycetes, with over 10,000 form-species, is…","Moniliales","Sphaeropsidales","Melanconiales","Agaricales","Moniliales bear conidia on free conidiophores and include saprophytes and parasites."],
+[4,"The three types of thallospores are blastospores, chlamydospores and…","arthrospores","aeciospores","zoospores","ascospores","Thallospores arise from the hyphae themselves rather than from conidiophores."],
+[4,"Fusarium belongs to Tuberculariaceae; its macroconidia are…","crescent-shaped","spherical","star-shaped","single-celled","Fusarium macroconidia are crescent-shaped and multiseptate, while microconidia are oval."],
+[4,"Alternaria conidia show septation that is…","both longitudinal and transverse","only transverse","absent","only longitudinal","Alternaria spores are muriform, divided in both directions."],
+[5,"A plasmodium is…","a multinucleate, wall-less amoeboid mass formed without cytokinesis","a uninucleate walled spore","a flask-shaped fruit body","a dikaryotic hypha","It arises from successive synchronous nuclear divisions of swarm cells without cytoplasmic division."],
+[5,"Under unfavourable conditions a plasmodium converts into a…","sclerotium","sporophore","zoosporangium","basidiocarp","Favourable conditions give a sporophore (fruiting), while unfavourable ones give a dormant sclerotium."],
+[5,"Club root of cabbage is caused by…","Plasmodiophora brassicae","Spongospora subterranea","Synchytrium endobioticum","Rhizoctonia solani","Plasmodiophora brassicae causes club root, also called finger and toe disease."],
+[5,"Powdery scab of potato is caused by…","Spongospora subterranea","Plasmodiophora brassicae","Phytophthora infestans","Fusarium solani","Spongospora subterranea is a plasmodiophorid parasite of potato."],
+[5,"Plasmodiophorid zoospores are…","anteriorly biflagellate","single posterior whiplash","non-motile","uniflagellate with tinsel","Plasmodiophoromycota zoospores carry two flagella at the front."],
+[6,"Ascospores are formed in an…","ascus","basidium","sporangium","pycnidium","Ascomycetes produce their sexual spores inside asci."],
+[6,"Eurotiales (Aspergillus, Penicillium) have asci enclosed in a…","cleistothecium with no ostiole","perithecium with ostiole","open apothecium","pycnidium","Eurotiales have completely enclosed ascocarps lacking ostioles."],
+[6,"A flask-shaped ascocarp with an ostiole is a…","perithecium","cleistothecium","apothecium","acervulus","Pyrenomycetes, the flask fungi, bear perithecia."],
+[6,"A saucer-shaped ascocarp with an exposed hymenium is an…","apothecium","cleistothecium","perithecium","pycnidium","Apothecia are open, cup-shaped ascocarps typical of Pezizales."],
+[6,"Aspergillus flavus produces the carcinogenic toxin…","aflatoxin","calvacin","ergotamine","penicillin","Aflatoxin contaminates stored grain and groundnuts."],
+[6,"Sclerotia of Claviceps purpurea (ergot) are used medicinally to…","hasten uterine contraction in childbirth","treat malaria","make citric acid","brew beer","Ergot alkaloids stimulate uterine contraction."],
+[6,"Taphrina species cause…","leaf curl and witches’ brooms","rusts","club root","black wart","Taphrina distorts leaves and causes witches’ brooms on plum and damson."],
+[6,"The red bread mould is…","Neurospora","Rhizopus","Mucor","Aspergillus","Neurospora is an Ascomycete, whereas Rhizopus is the black bread mould."],
+[6,"Industrial citric and gluconic acid are produced using…","Aspergillus niger","Claviceps purpurea","Taphrina deformans","Synchytrium endobioticum","Aspergillus niger is the standard industrial source of these acids."],
+[6,"An ascogenous yeast differs from an asporogenous yeast in…","producing ascospores","lacking cell walls","being filamentous","being bacterial","Ascogenous yeasts such as Saccharomyces form ascospores, but asporogenous yeasts do not."],
+[7,'Rhizopus stolonifer is commonly called…','black bread mould','red bread mould','pin mould','white mould','Rhizopus stolonifer is the black bread mould, in order Mucorales.'],
+[7,'In a Rhizopus diagram, the root-like anchoring structures are the…','rhizoids','haustoria','rhizomorphs','funiculi','Rhizoids anchor Rhizopus where stolons touch the substrate.'],
+[7,'Which Rhizopus structure is thick-walled, resilient and inert until conditions improve?','zygospore','sporangiospore','conidium','ascospore','The zygospore is the resistant resting spore formed after sexual fusion.'],
+[7,'Rhizopus is used commercially to produce…','fumaric acid','citric acid','penicillin','aflatoxin','Rhizopus yields fumaric acid and enzymes, but also causes post-harvest decay.'],
+[7,'Mucor (pin mould) belongs to order…','Mucorales','Eurotiales','Agaricales','Hypocreales','Mucor is in Mucorales, family Mucoraceae, class Zygomycetes.'],
+[7,'The swollen tip of the sporangiophore inside a Mucor sporangium is the…','columella','vesicle','metula','annulus','The columella supports the spore-filled sporangium.'],
+[7,'Mucor’s major reserve foods are…','glycogen and oil droplets','starch and sucrose','trehalose only','mannitol only','Fungi store glycogen and lipids, not starch.'],
+[7,'Mucor is called eucarpic because…','only part of the thallus becomes reproductive','the whole thallus turns reproductive','it has no hyphae','it is a yeast','Eucarpic fungi keep a vegetative thallus while part of it forms reproductive structures.'],
+[7,'Mucor is used to produce…','ethanol and chitosan','aflatoxin','ergot alkaloids','citric acid','Mucor yields ethanol and chitosan and has potential as fish feed.'],
+[7,'In Penicillium, the order of parts from the base up is…','conidiophore, metulae, phialides, conidia','vesicle, sterigmata, conidia','sporangiophore, columella, spores','stipe, pileus, gills','The brush-like Penicillium conidiophore branches into metulae, then phialides, then conidial chains.'],
+[7,'Penicillium and Aspergillus belong to order…','Eurotiales','Mucorales','Polyporales','Helotiales','Both are in Eurotiales, family Trichocomaceae.'],
+[7,'Aspergillus differs from Penicillium by having a swollen…','vesicle at the conidiophore tip','columella','annulus','volva','Aspergillus phialides radiate from a globose vesicle, whereas Penicillium has a brush-like branching tip.'],
+[7,'The cell from which an Aspergillus conidiophore arises is the…','foot cell','probasidium','hapteron','ascus','The foot cell is a thick-walled hyphal cell bearing the conidiophore.'],
+[7,'Aspergillus is of economic concern because it…','rots figs and dates and spoils nuts and bread','causes club root','produces ergot','fixes nitrogen','It spoils stored foods, though it also recycles carbon and nitrogen.'],
+[7,'Helminthosporium solani causes…','silver scurf of potato','black wart','club root','powdery scab','Silver scurf makes potatoes unacceptable to industry.'],
+[7,'Sclerotinia sclerotiorum (white mould) belongs to order…','Helotiales','Eurotiales','Hypocreales','Polyporales','It is an Ascomycete in Helotiales, family Sclerotiniaceae.'],
+[7,'A sclerotium has…','a dark thick-celled rind and a core of thin colourless cells','a gill-bearing cap','a flask-shaped body with ostiole','a sporangium and columella','The hard dark rind protects the food-storing colourless core.'],
+[7,'Fusarium venenatum is used industrially to make…','mycoprotein (meat-free food)','citric acid','penicillin','aflatoxin','Its mycoprotein is processed into meatless foods.'],
+[7,'Fusarium mycotoxins linked to oesophageal cancer are…','fumonisins and trichothecenes','aflatoxins','calvacin','ergotamine','These Fusarium toxins contaminate cereals.'],
+[7,'Fusarium colonies are typically…','fast-growing and felty, pale to rose, burgundy or violet','slow-growing and black','yeast-like and cream','gelatinous','Colour varies with species and growth conditions.'],
+[7,'Polyporus (umbrella polypore) bears its hymenium…','lining pores and tubes under the cap','on gills','inside a closed ball','in an ascus layer','Polypores have pores instead of gills.'],
+[7,'Polyporus species are known as…','wood rotters','rust fungi','smuts','slime moulds','They cause wood rot of timber trees.'],
+[7,'The cup-like volva at the base of Amanita is a remnant of the…','universal veil','partial veil only','ascocarp','peridiole','The universal veil encloses the young fruit body and leaves the volva.'],
+[7,'Amanita muscaria is commonly called…','fly agaric','puffball','reishi','stink horn','Amanita muscaria is the fly agaric (family Amanitaceae).'],
+[7,'Lycoperdon perlatum is the…','common pear-shaped puffball','giant puffball','earth star','bird’s nest fungus','L. perlatum is the common puffball, while Calvatia gigantea is the giant one.'],
+[7,'Ganoderma lucidum (reishi) is…','a glossy, woody bracket causing white rot','a smut on maize','an Ascomycete yeast','a plasmodiophorid','It grows on tree trunks, breaking down lignin and cellulose.'],
+[8,'Most filamentous fungi are mesophilic, growing between…','10–35 °C','0–5 °C','45–60 °C','50–70 °C','Optimum is 15–30 °C, and labs usually culture at 20–25 °C.'],
+[8,'Fungi that grow and sporulate at 45 °C or higher are…','thermophilic','psychrophilic','mesophilic','psychrotolerant','Chaetomium thermophilum is an example.'],
+[8,'Most common fungi grow well over a pH range of…','3–7','9–12','1 only','7–10','Some, like Aspergillus niger, tolerate pH 2 and below.'],
+[8,'Nearly all fungi are…','aerobic','strictly anaerobic','photosynthetic','chemoautotrophic','They get oxygen through cotton plugs or loosely capped bottles.'],
+[8,'Potato carrot agar (PCA) encourages sporulation because it is…','a starvation (nutritionally weak) medium','very rich','strongly acidic','selective for bacteria','Rich PDA promotes mycelium at the expense of sporulation.'],
+[8,'Near-ultraviolet sporulation requires cultures in…','plastic Petri dishes, not glass','glass dishes','sealed ampoules','liquid nitrogen','Glass is opaque to the 300–380 nm near-UV light needed.'],
+[8,'Basidiospores from fresh sporophores germinate on…','5% malt extract agar at 25 °C','PDA at 45 °C','water agar at 4 °C','blood agar','This is the standard method for germinating basidiospores.'],
+[8,'Mites that infest fungal cultures are mostly…','Tyroglyphus and Tarsonemus','Aedes and Culex','Anopheles','Drosophila','They are about 0.25 mm long and carry contaminants.'],
+[8,'Mites are kept out of culture tubes by the…','cigarette paper seal method','sticky tape alone','screw caps only','UV lamp','The paper’s pores pass air but block mites.'],
+[8,'Single-spore isolation uses a ____ needle to cut a 2 mm agar square.','Borrowdale','Pasteur','Petri','Kirby','A Borrowdale needle cuts the block around a germinating spore.'],
+[8,'Transferring 1 ml of spore suspension into 9 ml of sterile water is a…','decimal (10-fold) dilution','two-fold dilution','50% dilution','stock solution','Each step reduces the concentration tenfold.'],
+[8,'Melted agar for dilution plates is cooled to about…','40 °C','100 °C','4 °C','121 °C','Hotter agar would kill the spores.'],
+[8,'The main aim of a fungal culture collection is to keep strains…','viable without morphological, physiological or genetic change','growing as fast as possible','in the dark only','as mycelium only','Stability and viability are the main objectives.'],
+[8,'A seed stock is…','kept separate from the distribution stock','the same as the distribution stock','discarded after use','a freeze-dried sample only','Seed stock is for re-preservation; distribution stock is for supply.'],
+[8,'In mineral oil storage, slants are covered by about…','10 mm of sterile oil','1 mm of oil','50 mm of oil','no oil','Oil cuts dehydration and reduces oxygen tension.'],
+[8,'Silica gel storage suits…','sporulating fungi','Oomycota','purely mycelial fungi','delicate-spored fungi','It is unsuitable for Oomycota and non-sporulating mycelial fungi.'],
+[8,'Soil storage works best for…','Fusarium species','Oomycota','yeasts only','slime moulds','Soil storage preserves Fusarium and cereal pathogens well.'],
+[8,'Skimmed milk and inositol are used in freeze-drying as…','suspending media','fixatives','fungicides','carbon sources','They protect cells during drying.'],
+[8,'Residual moisture of freeze-dried material should stay at about…','1–2%','10–20%','30–40%','0%','Below 1% causes irreparable structural damage.'],
+[8,'The best long-term preservation method for most fungi is…','storage in liquid nitrogen','subculturing on agar','water storage','air drying','Liquid nitrogen (−196 °C) suspends metabolism and gives a limitless shelf-life.'],
+[8,'For cryopreservation, fungal cells are suspended in…','10% glycerol','70% ethanol','distilled water only','5% formalin','Glycerol protects against freezing damage.'],
+[8,'Metabolism is fully halted, with no physical or chemical reaction, below…','−139 °C','−20 °C','0 °C','4 °C','Ice recrystallisation can occur above −139 °C.'],
+[8,'Which group cannot be preserved by drying techniques?','Oomycota','Zygomycota','Ascomycota','Deuteromycota','Oomycota are best kept in liquid nitrogen or water.'],
+[8,'Rusts and smuts are best preserved in…','liquid nitrogen','silica gel','mineral oil','air-dried soil','Biotrophs and Ustilaginales survive best in liquid nitrogen.'],
+[8,'Herbarium specimens are protected from insects by methyl bromide or freezing at…','−30 °C for 36 h','4 °C for 1 h','0 °C for 5 min','−5 °C for 2 h','Freeze, then thaw gradually to avoid condensation.']
+];
+const $=s=>document.querySelector(s),app=$("#app");
+const sh=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+let run=[],i=0,sc=0,miss=[],tp=[],ans=false,cur=null,left=0,tid=null,up=false;
+function home(){
+ app.innerHTML=`<h1>PSB 241 CBT practice</h1><p>Each round draws 70 random questions from a bank of ${Q.length}, in a new order every time. After each answer you get a one-line explanation, whether you were right or wrong.</p><p>You get 35 minutes, and the timer starts when you press Start. Keys: 1–4 to answer, Enter for next.</p><button class="pri" id="go">Start quiz</button>`;
+ $("#go").onclick=()=>start(Q);
+}
+function start(src){run=sh(src.slice());if(src===Q)run=run.slice(0,70);i=0;sc=0;miss=[];tp=T.map(()=>[0,0]);clearInterval(tid);left=35*60;up=false;tid=setInterval(tick,1000);show()}
+function show(){
+ const x=run[i];ans=false;
+ const o=sh([x[2],x[3],x[4],x[5]]);cur={o,c:o.indexOf(x[2])};
+ app.innerHTML=`<div class="top"><span>Question ${i+1} of ${run.length}</span><span class="tm${left<=300?" low":""}" id="tm">${fmt(left)}</span><span>Score ${sc}</span></div><div class="bar"><i style="width:${i/run.length*100}%"></i></div><span class="chip">${T[x[0]]}</span><h2>${x[1]}</h2><div>${o.map((t,k)=>`<button class="opt" data-k="${k}"><b>${"ABCD"[k]}</b><span>${t}</span></button>`).join("")}</div><div id="fb"></div>`;
+ app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+ window.scrollTo(0,0);
+}
+function pick(k){
+ if(ans)return;ans=true;const x=run[i],ok=k===cur.c;
+ tp[x[0]][1]++;if(ok){sc++;tp[x[0]][0]++}else miss.push(x);
+ app.querySelectorAll(".opt").forEach((b,n)=>{b.disabled=true;if(n===cur.c)b.classList.add("ok");else if(n===k)b.classList.add("no")});
+ const f=$("#fb");
+ f.innerHTML=`<div class="fb ${ok?"ok":"no"}"><strong>${ok?"Correct":"Not quite"}</strong>${x[6]}</div><button class="pri" id="nx">${i+1<run.length?"Next question":"See results"}</button>`;
+ $("#nx").onclick=next;f.scrollIntoView({block:"nearest",behavior:"smooth"});
+}
+const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+function tick(){left--;const t=$("#tm");if(t){t.textContent=fmt(left);t.classList.toggle("low",left<=300)}if(left<=0){clearInterval(tid);up=true;end()}}
+function next(){i++;i<run.length?show():end()}
+function end(){
+ clearInterval(tid);const n=run.length,p=Math.round(sc/n*100);
+ app.innerHTML=`<h1>${p>=90?"Excellent":p>=70?"Good progress":"Keep drilling"}</h1><div class="big">${p}%</div><p>${up?"Time’s up. ":""}${sc} of ${n} correct${up?" (unanswered count as wrong)":""}</p>
+ ${T.map((t,k)=>tp[k][1]?`<div class="row"><span>${t}</span><div class="bar"><i style="width:${tp[k][0]/tp[k][1]*100}%"></i></div><em>${tp[k][0]}/${tp[k][1]}</em></div>`:"").join("")}
+ <div style="height:16px"></div>
+ ${miss.length?`<button class="pri" id="rm">Retry ${miss.length} missed</button>`:""}
+ <button class="${miss.length?"sec":"pri"}" id="nr">New shuffled round</button>
+ ${miss.length?`<h2>Review missed</h2>${miss.map(x=>`<details><summary>${x[1]}</summary><p><b>${x[2]}</b><br>${x[6]}</p></details>`).join("")}`:""}`;
+ const m=miss.slice();
+ if($("#rm"))$("#rm").onclick=()=>start(m);
+ $("#nr").onclick=()=>start(Q);
+ window.scrollTo(0,0);
+}
+document.addEventListener("keydown",e=>{
+ if(!run.length||!$(".opt"))return;
+ if(!ans&&"1234".includes(e.key))pick(+e.key-1);
+ else if(ans&&(e.key==="Enter"||e.key==="ArrowRight")&&$("#nx"))next();
+});
+home();
+</script></body></html>
